@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Wynum Todo Demo</title>
+  
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <nav class="navbar navbar-dark bg-dark">
+    <span class="navbar-brand mb-0 h1">Wynum Todo Demo</span>
+  </nav>
+
+  <div id="app" class="container">
+    <div class="card w-50 mx-auto mt-4" v-if="!isLoggedIn && !showCodeCard">
+      <div class="card-body">
+        <b>Login/Register</b>
+        <form @submit.prevent="login">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter email" v-model="email">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="passowrd" placeholder="Password" v-model="password">
+          </div>
+          <button type="submit" class="btn btn-primary">Sign In</button>
+          or 
+          <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="card w-50 mx-auto mt-4" v-if="!isLoggedIn && showCodeCard">
+      <div class="card-body">
+        <form @submit.prevent="confirmCode">
+          <div class="form-group">
+            <label for="exampleInputEmail1">Please Enter code</label>
+            <input type="text" class="form-control" placeholder="code" v-model="code">
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="card w-50 mx-auto mt-4" v-if="isLoggedIn">
+      <div class="card-body">
+        <b>Todo view</b>
+        <div class="row mt-4">
+          <div class="col-md-7">
+            <input type="text" class="form-control" placeholder="todo" v-model='description'>
+          </div>
+          <div class="col-md-3">
+            <button type="submit" class="btn btn-primary" @click="addTodo">Add</button>
+          </div>
+        </div>
+
+        <ul class="list-group list-group-flush mt-4">
+          <li class="list-group-item" v-for="(todo, index) in todos">
+            <div class="row">
+              <div class="col">
+                {{ todo.description }}
+              </div>
+              <div class="col">
+                <button @click="removeTodo(index)">X</button>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="./index.js"></script>
+</body>
+</html>
